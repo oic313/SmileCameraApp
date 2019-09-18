@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Setting View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="SettingViewController" customModule="SmileCamera" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="設定" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UxG-NZ-Faq">
+                                <rect key="frame" x="176.5" y="64" width="61" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R9a-GN-zVQ">
+                                <rect key="frame" x="157" y="231" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="RSV-jH-xGQ"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="撮影人数" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="64T-gc-8rl">
+                                <rect key="frame" x="172.5" y="200" width="69.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="撮影後待機時間" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asa-yx-lYZ">
+                                <rect key="frame" x="146.5" y="291" width="121.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="G1p-vK-QDK">
+                                <rect key="frame" x="157" y="322" width="100" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="6ZQ-9f-cOC"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gs7-Rx-hqm">
+                                <rect key="frame" x="186" y="764" width="42" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="OK"/>
+                                <connections>
+                                    <segue destination="DTW-3l-tfc" kind="show" identifier="toCameraViewController" id="W4o-aa-IkN"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="目を瞑っている時撮影しない" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FRt-vw-36f">
+                                <rect key="frame" x="94.5" y="382" width="225.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LyP-cl-BU7">
+                                <rect key="frame" x="182.5" y="413" width="51" height="31"/>
+                                <connections>
+                                    <action selector="switchChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="gMq-UP-usv"/>
+                                </connections>
+                            </switch>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <rect key="contentStretch" x="0.69999999999999996" y="0.25" width="1" height="1"/>
+                        <constraints>
+                            <constraint firstItem="G1p-vK-QDK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="0jW-uh-o7H"/>
+                            <constraint firstItem="LyP-cl-BU7" firstAttribute="top" secondItem="FRt-vw-36f" secondAttribute="bottom" constant="10" id="255-De-O2c"/>
+                            <constraint firstItem="R9a-GN-zVQ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5gq-e0-D3J"/>
+                            <constraint firstItem="LyP-cl-BU7" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7Db-HF-Nhd"/>
+                            <constraint firstItem="G1p-vK-QDK" firstAttribute="top" secondItem="asa-yx-lYZ" secondAttribute="bottom" constant="10" id="N55-HQ-7W5"/>
+                            <constraint firstItem="64T-gc-8rl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="P4d-jG-m5j"/>
+                            <constraint firstItem="UxG-NZ-Faq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Qyt-IW-2oj"/>
+                            <constraint firstItem="FRt-vw-36f" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="RgO-BP-oVh"/>
+                            <constraint firstItem="FRt-vw-36f" firstAttribute="top" secondItem="G1p-vK-QDK" secondAttribute="bottom" constant="30" id="WRR-zy-H62"/>
+                            <constraint firstItem="64T-gc-8rl" firstAttribute="top" secondItem="UxG-NZ-Faq" secondAttribute="bottom" constant="100" id="d5s-Eq-3zB"/>
+                            <constraint firstItem="UxG-NZ-Faq" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="eJB-t4-fRh"/>
+                            <constraint firstItem="asa-yx-lYZ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hfq-QA-EES"/>
+                            <constraint firstItem="asa-yx-lYZ" firstAttribute="top" secondItem="R9a-GN-zVQ" secondAttribute="bottom" constant="30" id="nbD-5E-zBO"/>
+                            <constraint firstItem="R9a-GN-zVQ" firstAttribute="top" secondItem="64T-gc-8rl" secondAttribute="bottom" constant="10" id="njA-G6-1Gf"/>
+                            <constraint firstItem="gs7-Rx-hqm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qhZ-f9-Tz3"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="gs7-Rx-hqm" secondAttribute="bottom" constant="50" id="sLe-Nr-KnK"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="UISwitch" destination="LyP-cl-BU7" id="LnY-Ge-SVv"/>
+                        <outlet property="countTextField" destination="R9a-GN-zVQ" id="ytx-Eq-HXk"/>
+                        <outlet property="secondsTextField" destination="G1p-vK-QDK" id="ijK-JE-HWl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="IjZ-Ho-IIP">
+            <objects>
+                <viewController id="DTW-3l-tfc" customClass="CameraViewController" customModule="SmileCamera" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Imn-nf-jja">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hqq-AJ-GjI">
+                                <rect key="frame" x="176.5" y="764" width="61" height="48"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <state key="normal" title="撮影"/>
+                                <connections>
+                                    <action selector="startButtonPushed:" destination="DTW-3l-tfc" eventType="touchUpInside" id="sWg-nN-mne"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ont-M7-uPh">
+                                <rect key="frame" x="20" y="796" width="41" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="切替"/>
+                                <connections>
+                                    <action selector="reverseCamera:" destination="DTW-3l-tfc" eventType="touchUpInside" id="hzg-9O-PxN"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uWV-92-lQp">
+                                <rect key="frame" x="353" y="796" width="41" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="設定"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="toSettingViewControllew" id="AwR-UG-xPw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ont-M7-uPh" firstAttribute="leading" secondItem="fc8-ew-ejC" secondAttribute="leading" constant="20" id="47d-JE-uou"/>
+                            <constraint firstItem="fc8-ew-ejC" firstAttribute="bottom" secondItem="uWV-92-lQp" secondAttribute="bottom" constant="30" id="CKC-wG-0aL"/>
+                            <constraint firstItem="fc8-ew-ejC" firstAttribute="bottom" secondItem="ont-M7-uPh" secondAttribute="bottom" constant="30" id="SZp-fN-VpE"/>
+                            <constraint firstItem="Hqq-AJ-GjI" firstAttribute="centerX" secondItem="Imn-nf-jja" secondAttribute="centerX" id="T1l-xe-zCM"/>
+                            <constraint firstItem="fc8-ew-ejC" firstAttribute="trailing" secondItem="uWV-92-lQp" secondAttribute="trailing" constant="20" id="dTB-lM-uDK"/>
+                            <constraint firstItem="fc8-ew-ejC" firstAttribute="bottom" secondItem="Hqq-AJ-GjI" secondAttribute="bottom" constant="50" id="gOh-H4-vV2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="fc8-ew-ejC"/>
+                    </view>
+                    <connections>
+                        <outlet property="reverseButton" destination="ont-M7-uPh" id="HKZ-NP-z54"/>
+                        <outlet property="settingButton" destination="uWV-92-lQp" id="x66-eS-MXC"/>
+                        <outlet property="startButton" destination="Hqq-AJ-GjI" id="5Z6-iZ-2iy"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AbG-Rr-vN4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1758" y="21"/>
+        </scene>
+    </scenes>
+</document>

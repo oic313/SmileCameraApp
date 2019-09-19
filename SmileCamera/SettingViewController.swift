@@ -26,9 +26,9 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(subjectCount)
-        print(holdSecond)
-        print(closeEyesFlag)
+//        print(subjectCount)
+//        print(holdSecond)
+//        print(closeEyesFlag)
                 
         self.countTextField.text = "\(subjectCount) 人以上"
         self.secondsTextField.text = "\(holdSecond) 秒"
@@ -39,7 +39,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         pickerView1.showsSelectionIndicator = true
         pickerView1.tag = 1
 
-        let toolbar1 = UIToolbar(frame: CGRectMake(0, 0, 0, 35))
+        let toolbar1 = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 35))
         let doneItem1 = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingViewController.done))
         let cancelItem1 = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(SettingViewController.cancel))
         toolbar1.setItems([cancelItem1, doneItem1], animated: true)
@@ -52,7 +52,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         pickerView2.showsSelectionIndicator = true
         pickerView2.tag = 2
         
-        let toolbar2 = UIToolbar(frame: CGRectMake(0, 0, 0, 35))
+        let toolbar2 = UIToolbar(frame: CGRect(x: 0, y: 0, width: 0, height: 35))
         let doneItem2 = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(SettingViewController.done))
         let cancelItem2 = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(SettingViewController.cancel))
         toolbar2.setItems([cancelItem2, doneItem2], animated: true)
@@ -80,11 +80,18 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
+    //メモリ警告が出た時に呼ばれる関数
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+    
     //以下pickerの設定
+    //Picerviewの列の数は1とする
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    //PickerViewの行数
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if pickerView.tag == 1 {
             self.tag=1
@@ -95,6 +102,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
+    //PickerViewに表示する配列の要素数を設定する
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if pickerView.tag == 1 {
             self.subjectCount = list1[row]
@@ -105,6 +113,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
+    //ラベル表示
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if pickerView.tag == 1 {
             self.subjectCount = list1[row]
@@ -115,6 +124,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
+    //キャンセルタップ時
     @objc func cancel(pickerView: UIPickerView) {
         if self.tag == 1 {
             self.subjectCount = 1
@@ -128,6 +138,7 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
+    //doneタップ時
     @objc func done(pickerView: UIPickerView) {
         if self.tag == 1 {
             self.countTextField.endEditing(true)
@@ -136,12 +147,5 @@ class SettingViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         }
     }
     
-    func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
-        return CGRect(x: x, y: y, width: width, height: height)
-    }
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
 }
 

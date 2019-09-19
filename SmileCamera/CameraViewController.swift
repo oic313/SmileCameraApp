@@ -30,9 +30,9 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(subjectCount)
-        print(holdSecond)
-        print(closeEyesFlag)
+//        print(subjectCount)
+//        print(holdSecond)
+//        print(closeEyesFlag)
         
         self.view.backgroundColor = UIColor.black
         self.setupCaptureSession(withPosition: .back)
@@ -79,6 +79,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         }
     }
     
+    //CaputureSessionの設定
     func setupCaptureSession(withPosition cameraPosition: AVCaptureDevice.Position) {
         self.videoDevice = AVCaptureDevice.default(AVCaptureDevice.DeviceType.builtInWideAngleCamera, for: AVMediaType.video, position: cameraPosition)
         
@@ -91,7 +92,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         }catch{
             print("カメラ許可を得てください")
         }
-        //フレーム毎に呼び出すデリゲート登録
+        //新しいキャプチャの追加毎に呼び出すデリゲート登録
         let videoDataOutput = AVCaptureVideoDataOutput()
         videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
         videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as AnyHashable as! String : Int(kCVPixelFormatType_32BGRA)]
@@ -102,6 +103,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         self.captureSession?.startRunning()
     }
     
+    //カメラポジションの切り替え
     func reverseCameraPosition() {
         //セッションの終了
         self.captureSession?.stopRunning()
@@ -111,7 +113,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         self.captureSession?.outputs.forEach { output in
             self.captureSession?.removeOutput(output)
         }
-        //新しいセッションを
+        //新しいセッションを設定
         let newCameraPosition: AVCaptureDevice.Position = self.videoDevice?.position == .front ? .back : .front
         self.setupCaptureSession(withPosition: newCameraPosition)
         let newVideoLayer: AVCaptureVideoPreviewLayer = AVCaptureVideoPreviewLayer(session: self.captureSession!)
@@ -134,30 +136,30 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     }
     
     
-    // SampleBufferからUIImageの作成
+    //SampleBufferからUIImageの作成
     private func imageFromSampleBuffer(sampleBuffer :CMSampleBuffer) -> UIImage {
         
         let imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer)!
         
-        // イメージバッファのロック
+        //イメージバッファのロック
         CVPixelBufferLockBaseAddress(imageBuffer, CVPixelBufferLockFlags(rawValue: 0))
         
-        // 画像情報を取得
+        //画像情報を取得
         let base = CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0)!
         let bytesPerRow = UInt(CVPixelBufferGetBytesPerRow(imageBuffer))
         let width = UInt(CVPixelBufferGetWidth(imageBuffer))
         let height = UInt(CVPixelBufferGetHeight(imageBuffer))
         
-        // ビットマップコンテキスト作成
+        //ビットマップコンテキスト作成
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let bitsPerCompornent = 8
         let bitmapInfo = CGBitmapInfo(rawValue: (CGBitmapInfo.byteOrder32Little.rawValue | CGImageAlphaInfo.premultipliedFirst.rawValue) as UInt32)
         let newContext = CGContext(data: base, width: Int(width), height: Int(height), bitsPerComponent: Int(bitsPerCompornent), bytesPerRow: Int(bytesPerRow), space: colorSpace, bitmapInfo: bitmapInfo.rawValue)! as CGContext
         
-        // イメージバッファのアンロック
+        //イメージバッファのアンロック
         CVPixelBufferUnlockBaseAddress(imageBuffer, CVPixelBufferLockFlags(rawValue: 0))
         
-        // 画像作成
+        //画像作成
         let imageRef = newContext.makeImage()!
         let image = UIImage(cgImage: imageRef, scale: 1.0, orientation: UIImage.Orientation.right)
         
@@ -244,5 +246,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         }
         return orientation
     }
-    
+    //メモリ警告が出た時に呼ばれる関数
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
 }

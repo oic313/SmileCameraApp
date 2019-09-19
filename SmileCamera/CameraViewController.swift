@@ -89,18 +89,18 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         do{
             let videoInput = try AVCaptureDeviceInput(device: self.videoDevice!)
             self.captureSession?.addInput(videoInput)
+            //新しいキャプチャの追加毎に呼び出すデリゲート登録
+            let videoDataOutput = AVCaptureVideoDataOutput()
+            videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
+            videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as AnyHashable as! String : Int(kCVPixelFormatType_32BGRA)]
+            videoDataOutput.alwaysDiscardsLateVideoFrames = true
+            //セッションにOutput情報を追加
+            self.captureSession?.addOutput(videoDataOutput)
+            //スタート
+            self.captureSession?.startRunning()
         }catch{
-            print("カメラ許可を得てください")
+            print("カメラ許可なしの場合")
         }
-        //新しいキャプチャの追加毎に呼び出すデリゲート登録
-        let videoDataOutput = AVCaptureVideoDataOutput()
-        videoDataOutput.setSampleBufferDelegate(self, queue: DispatchQueue.main)
-        videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as AnyHashable as! String : Int(kCVPixelFormatType_32BGRA)]
-        videoDataOutput.alwaysDiscardsLateVideoFrames = true
-        //セッションにOutput情報を追加
-        self.captureSession?.addOutput(videoDataOutput)
-        //スタート
-        self.captureSession?.startRunning()
     }
     
     //カメラポジションの切り替え
@@ -129,7 +129,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         if (self.counter % self.DISMISS_COUNT) == 0, self.startFlag == true{
             let image = imageFromSampleBuffer(sampleBuffer: sampleBuffer)
             if self.smileDecision(image: image){
-                
+                saveImage(image: image)
             }
         }
         self.counter += 1
@@ -168,8 +168,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     
     //笑顔判定
     private func smileDecision(image :UIImage) -> Bool{
-        var saveFlag = false
-        
+        var saveFlag: Bool = false
         //ciImage変換(向き情報消失)
         let ciImage = CIImage(image: image)!
         let detector = CIDetector(ofType: CIDetectorTypeFace, context: nil, options:  [CIDetectorAccuracy: CIDetectorAccuracyHigh])
@@ -177,39 +176,43 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         let orientation = setCIDetectorImageOrientation()
         //画像判定
         if let features = detector?.features(in: ciImage, options: [CIDetectorSmile: true, CIDetectorEyeBlink : true, CIDetectorImageOrientation : orientation]){
+            print("撮影人数:\(features.count)")
+            //人数を満たせればreturn
+            if features.count < self.subjectCount{ return saveFlag}
             
-            if features.count >= self.subjectCount{
+            var smileCount: Int = 0
+            var closeEyesCount: Int = 0
+            (features as? [CIFaceFeature])?.forEach{
+                //1人でも笑顔でなければ保存しない
+                if $0.hasSmile{
+                    smileCount += 1
+                    print("----------smile---------")
+                }else{
+                    print("<<<<<<<<<<no<<<<<<<<<<<<")
+                }
+                //print($0.leftEyeClosed)
+                //print($0.rightEyeClosed)
+                
+                //目を閉じているか
+                if self.closeEyesFlag{
+                    if $0.leftEyeClosed||$0.rightEyeClosed{closeEyesCount += 1}
+                }
+            }
+            //1人でも目を閉じていたらreturn false
+            if self.closeEyesFlag && closeEyesCount == 0 {
                 saveFlag = true
             }else{
                 saveFlag = false
                 return saveFlag
             }
-            (features as? [CIFaceFeature])?.forEach{
-                //笑顔か判定する
-                if $0.hasSmile{
-                    //print("------------------smile---------------------")
-                }else{
-                    //print("<<<<<<<<<<<<smile nothing>>>>>>>>>>>>>>>>>>>>>")
-                    saveFlag = false
-                }
-                //print($0.leftEyeClosed)
-                //print($0.rightEyeClosed)
-                //目が閉じているか判定する
-                if self.closeEyesFlag{
-                    if $0.leftEyeClosed||$0.rightEyeClosed{
-                        saveFlag = false
-                    }
-                }
+            //全員笑ってなければreturn false
+            if smileCount == features.count {
+                saveFlag = true
+            }else{
+                saveFlag = false
+                return saveFlag
             }
             
-            if saveFlag == true{
-                // アルバムに追加
-                UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
-                captureSession?.stopRunning()
-                //数秒処理を止める
-                Thread.sleep(forTimeInterval: Double(self.holdSecond))
-                captureSession?.startRunning()
-            }
         }
         return saveFlag
         
@@ -217,6 +220,7 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
     
     private func setCIDetectorImageOrientation() -> Int{
         var orientation = 6
+        //バックカメラとインカメで左右の向きが入れ替わる
         if self.videoDevice?.position == .back{
             switch UIDevice.current.orientation{
             case .portrait:
@@ -246,6 +250,17 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
         }
         return orientation
     }
+    
+    //アルバムに写真を保存
+    private func saveImage(image :UIImage){
+        // アルバムに追加
+        UIImageWriteToSavedPhotosAlbum(image, self, nil, nil)
+        captureSession?.stopRunning()
+        //数秒処理を止める
+        Thread.sleep(forTimeInterval: Double(self.holdSecond))
+        captureSession?.startRunning()
+    }
+    
     //メモリ警告が出た時に呼ばれる関数
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

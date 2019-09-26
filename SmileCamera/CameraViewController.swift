@@ -199,14 +199,16 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 }
             }
             //1人でも目を閉じていたらreturn false
-            if self.closeEyesFlag && closeEyesCount == 0 {
-                saveFlag = true
-            }else{
-                saveFlag = false
-                return saveFlag
+            if self.closeEyesFlag{
+                if closeEyesCount == 0 {
+                    saveFlag = true
+                }else{
+                    saveFlag = false
+                    return saveFlag
+                }
             }
-            //指定人数以上笑ってなければreturn false
-            if smileCount >= features.count {
+            //全員笑ってなければreturn false
+            if smileCount == features.count {
                 saveFlag = true
             }else{
                 saveFlag = false

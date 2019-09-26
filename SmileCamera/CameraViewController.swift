@@ -205,8 +205,8 @@ class CameraViewController: UIViewController, AVCaptureVideoDataOutputSampleBuff
                 saveFlag = false
                 return saveFlag
             }
-            //全員笑ってなければreturn false
-            if smileCount == features.count {
+            //指定人数以上笑ってなければreturn false
+            if smileCount >= features.count {
                 saveFlag = true
             }else{
                 saveFlag = false
